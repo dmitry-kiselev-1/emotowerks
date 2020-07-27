@@ -1,0 +1,41 @@
+<div class="layout-sidebar" [ngClass]="{'layout-sidebar-active':app.mobileMenuActive}">
+    <ul class="layout-menu" (click)="app.hideMobileMenu($event)">
+        <li>
+            <a [routerLink]="['/Dashboard']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:false}">
+                <i class="fa fa-globe"></i>
+                <span>Dashboard</span>
+            </a>
+        </li>
+        <li>
+            <a [routerLink]="['/BidList']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:false}">
+                <i class="fa fa-table"></i>
+                <span>Bids list</span>
+            </a>
+        </li>
+        <li>
+            <a [routerLink]="['/BidDetail']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:false}">
+                <i class="fa fa-window-maximize"></i>
+                <span>Bid detail</span>
+            </a>
+        </li>
+        <li>
+            <a [routerLink]="['/BidProposal']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:false}">
+                <i class="fa fa-check"></i>
+                <span>Bid proposals</span>
+            </a>
+        </li>
+        <li>
+            <a [routerLink]="['/BaselineChart']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:false}">
+                <i class="fa fa-pie-chart"></i>
+                <span>Baseline chart</span>
+            </a>
+        </li>
+        <li>
+            <a [routerLink]="['/PriceChart']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:false}">
+                <i class="fa fa-pie-chart"></i>
+                <span>Price chart</span>
+            </a>
+        </li>
+    </ul>
+
+</div>

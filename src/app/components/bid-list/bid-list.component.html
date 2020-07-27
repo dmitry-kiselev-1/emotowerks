@@ -1,0 +1,97 @@
+<div class="ui-fluid">
+
+    <p-table #dt [columns]="cols" [value]="bidList" [scrollable]="false" scrollHeight="400px">
+
+        <ng-template pTemplate="caption">
+            <div class="ui-helper-clearfix">
+                <div class="ui-g">
+                    <div class="ui-g-10"></div>
+                    <div class="ui-g-2">
+                        <button type="button" pButton icon="fa fas fa-file-excel" iconPos="left" label="Export" (click)="dt.exportCSV()" style="float:right"></button>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                    {{col.header}}
+                    <p-sortIcon [field]="col.field"></p-sortIcon>
+                </th>
+            </tr>
+
+            <tr>
+                <th *ngFor="let col of columns" [ngSwitch]="col.field">
+
+                    <ng-container *ngSwitchCase="'id'">
+                        <div class="ui-g">
+                            <div class="ui-g-12 row-filter">
+                                <input autocomplete="off" type="text" pInputText placeholder="start with"
+                                    (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+                            </div>
+                        </div>
+                     </ng-container>
+
+                    <ng-container *ngSwitchCase="'price'">
+                        <!--<input autocomplete="off" #x1 pInputText type="text" (input)="(dt.filter(x1.value, col.field, 'gt')) && (dt.filter(x2.value, col.field, 'lt'))">-->
+                        <!--<input autocomplete="off" #x2 pInputText type="text" (input)="(dt.filter(x2.value, col.field, 'lt')) && (dt.filter(x1.value, col.field, 'gt'))">-->
+                        <div class="ui-g">
+                            <div class="ui-g-12 row-filter">
+                                    <input autocomplete="off" #price1 pInputText type="number" placeholder="more than"
+                                           (input)="price2.value = null; dt.filter($event.target.value, col.field, 'gt')">
+                                    <input autocomplete="off" #price2 pInputText type="number" placeholder="less than"
+                                           (input)="price1.value = null; dt.filter($event.target.value, col.field, 'lt')">
+                            </div>
+                        </div>
+                    </ng-container>
+
+                    <ng-container *ngSwitchCase="'bidStartTimeUtc'">
+                        <div class="ui-g">
+                            <div class="ui-g-12 row-filter">
+                                <input autocomplete="off" #start1 pInputText type="date" placeholder="more than"
+                                    (input)="start2.value = null; dt.filter($event.target.value, col.field, 'gt')">
+                                <input autocomplete="off" #start2 pInputText type="date"  placeholder="less than"
+                                    (input)="start1.value = null; dt.filter($event.target.value, col.field, 'lt')">
+                            </div>
+                        </div>
+                    </ng-container>
+
+                    <ng-container *ngSwitchCase="'bidEndTimeUtc'">
+                        <div class="ui-g">
+                            <div class="ui-g-12 row-filter">
+                                <input autocomplete="off" #end1 pInputText type="date" placeholder=">"
+                                       (input)="end2.value = null; dt.filter($event.target.value, col.field, 'gt')">
+                                <input autocomplete="off" #end2 pInputText type="date"  placeholder="<"
+                                       (input)="end1.value = null; dt.filter($event.target.value, col.field, 'lt')">
+                            </div>
+                        </div>
+                    </ng-container>
+
+                    <p-multiSelect *ngSwitchCase="'status'" [options]="this.bidStatuseCol" defaultLabel="all"
+                        (onChange)="dt.filter($event.value, col.field, 'in')"></p-multiSelect>
+
+                    <p-multiSelect *ngSwitchCase="'energyGroup'" [options]="this.energyGroupCol" defaultLabel="all"
+                        (onChange)="dt.filter($event.value, col.field, 'in')"></p-multiSelect>
+
+                    <p-multiSelect *ngSwitchCase="'market'" [options]="this.marketCol" defaultLabel="all"
+                                   (onChange)="dt.filter($event.value, col.field, 'in')"></p-multiSelect>
+                </th>
+            </tr>
+
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <tr [pSelectableRow]="rowData">
+                <td *ngFor="let col of columns" [ngSwitch]="col.field">
+                    <a *ngSwitchCase="'id'" [routerLink]="['/BidDetail/' + rowData[col.field]]" style="font-size: small">
+                        {{ rowData[col.field] }}
+                    </a>
+                    <ng-container *ngSwitchCase="'bidStartTimeUtc'"> {{ rowData[col.field] | date:"yyyy-MM-dd HH:mm:ss" }} </ng-container>
+                    <ng-container *ngSwitchCase="'bidEndTimeUtc'">   {{ rowData[col.field] | date:"yyyy-MM-dd HH:mm:ss" }} </ng-container>
+                    <ng-container *ngSwitchDefault> {{ rowData[col.field] }}</ng-container>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+</div>
