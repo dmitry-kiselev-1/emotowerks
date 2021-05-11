@@ -39,7 +39,7 @@
         "font-awesome": "4.7.0",
         "primeng": "6.0.0",
         "primeicons": "^1.0.0-beta.9",
-        "lodash": "^4.17.10",
+        "lodash": "^4.17.21",
         "moment": "^2.22.2",
         "angular-in-memory-web-api": "^0.6.0"
     },
